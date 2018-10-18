@@ -1,10 +1,12 @@
+Sitecore Phys Finder Demo - Solr with Spatial Search, Faceting, and Efficient Solr-Side Pagination
+
 This demo is built on:
 Sitecore 8.1 rev 160302
 Solr 6.3 http://archive.apache.org/dist/lucene/solr/6.3.0/
 
 Solr support package: https://dev.sitecore.net/Downloads/Sitecore_Experience_Platform/Sitecore_81/Sitecore_Experience_Platform_81_Update2.aspx
 
-Solr install instructions:
+Solr install instructions (use configset below):
 https://doc.sitecore.net/sitecore_experience_platform/82/setting_up_and_maintaining/search_and_indexing/walkthrough_setting_up_solr
 
 Spatial search is implemented in Sitecore via:
@@ -12,7 +14,7 @@ http://www.ehabelgindy.com/sitecore-spatial-search-using-solr/
 
 Note: you must build this from source - there is a bug with the binaries on the sitecore marketplace (see the PRs).
 
-* Create solr cores for all of the sitecore indexes:
+Create solr cores for all of the sitecore indexes:
 
 robocopy "%solr%\configsets\sitecore_standard_configs\conf" "%solr%\scan_site_index\conf" /mir
 robocopy "%solr%\configsets\sitecore_standard_configs\conf" "%solr%\sitecore_analytics_index\conf" /mir
