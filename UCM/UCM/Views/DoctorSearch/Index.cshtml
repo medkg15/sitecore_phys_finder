@@ -1,0 +1,68 @@
+﻿@model UCM.Models.DoctorSearchModel
+
+<h1>Doctors:</h1>
+
+
+@using (Html.BeginRouteForm(Sitecore.Mvc.Configuration.MvcSettings.SitecoreRouteName, FormMethod.Post))
+{
+    @Html.Sitecore().FormHandler()
+
+    <div>
+        @Html.LabelFor(x => x.Name)
+        @Html.EditorFor(x => x.Name)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Specialty)
+        @Html.DropDownListFor(x => x.Specialty, Model.Results.Facets.Categories
+            .FirstOrDefault(c => c.Name == "specialtynames")?.Values
+            .Select(v => new SelectListItem()
+            {
+                Text = $"{v.Name} ({v.AggregateCount})",
+                Value = v.Name,
+                Selected = v.Name == Model.Specialty
+            }), "Specialty")
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Language)
+        @Html.DropDownListFor(x => x.Language, Model.Results.Facets.Categories
+            .FirstOrDefault(c => c.Name == "languagenames")?.Values
+            .Select(v => new SelectListItem()
+            {
+                Text = $"{v.Name} ({v.AggregateCount})",
+                Value = v.Name,
+                Selected = v.Name == Model.Language
+            }), "Language")
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Latitude)
+        @Html.EditorFor(x => x.Latitude)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Longitude)
+        @Html.EditorFor(x => x.Longitude)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.Page)
+        @Html.EditorFor(x => x.Page)
+    </div>
+    <div>
+        @Html.LabelFor(x => x.PageSize)
+        @Html.EditorFor(x => x.PageSize)
+    </div>
+    <input type="submit" />
+}
+
+@foreach (var result in Model.Results)
+{
+    <p>@result.Document.Name</p>
+    if (result.Document.Specialties != null)
+    {
+        <p>@string.Join(", ", result.Document.Specialties)</p>
+    }
+    <p>@result.Document.Location.Lat,@result.Document.Location.Lon</p>
+    if (Model.DidDistanceSearch)
+    {
+        <p>Distance: @result.Score km</p>
+    }
+    <hr />
+}
